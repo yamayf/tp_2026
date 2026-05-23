@@ -5,9 +5,11 @@
 #include <string>
 #include <vector>
 #include <memory>
-class CompositeShape : public Shape {
+class CompositeShape : public Shape
+{
 private:
 	std::vector<std::shared_ptr<Shape>> shapes;
+
 public:
 	CompositeShape();
 	void addShape(std::shared_ptr<Shape> shape);

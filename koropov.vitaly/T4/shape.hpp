@@ -2,7 +2,8 @@
 #define SHAPE_HPP
 #include "point.hpp"
 #include <string>
-class Shape {
+class Shape
+{
 public:
 	virtual double getArea() const = 0;
 	virtual Point getCenter() const = 0;

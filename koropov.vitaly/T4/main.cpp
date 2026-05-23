@@ -3,7 +3,8 @@
 #include "rectangle.hpp"
 #include "circle.hpp"
 #include "compositeshape.hpp"
-int main() {
+int main()
+{
     Point lb;
     lb.x = 0;
     lb.y = 0;
@@ -22,7 +23,7 @@ int main() {
     std::cout << comp.getArea() << '\n';
     Point compCenter = comp.getCenter();
     std::cout << compCenter.x << " "
-        << compCenter.y << '\n';
+              << compCenter.y << '\n';
     comp.scale(3);
     std::cout << comp.getArea() << '\n';
     return 0;

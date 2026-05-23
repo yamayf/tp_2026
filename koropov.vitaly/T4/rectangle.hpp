@@ -3,10 +3,12 @@
 #include "point.hpp"
 #include "shape.hpp"
 #include <string>
-class Rectangle : public Shape {
+class Rectangle : public Shape
+{
 private:
 	Point leftBottom;
 	Point rightTop;
+
 public:
 	Rectangle(Point lb, Point rt);
 	double getArea() const override;
