@@ -25,7 +25,7 @@ void Rectangle::move(double dx, double dy) {
 	rightTop.y += dy;
 }
 
-void Rectangle::scale(double factor){
+void Rectangle::scale(double factor) {
 	Point center = getCenter();
 	leftBottom.x = center.x + (leftBottom.x - center.x) * factor;
 	leftBottom.y = center.y + (leftBottom.y - center.y) * factor;

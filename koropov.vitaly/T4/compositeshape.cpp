@@ -3,7 +3,7 @@
 CompositeShape::CompositeShape() {
 }
 
-Point CompositeShape::getMinPoint() const { 
+Point CompositeShape::getMinPoint() const {
 	Point min = shapes[0]->getMinPoint();
 
 	double minX = min.x;
@@ -26,9 +26,9 @@ Point CompositeShape::getMinPoint() const {
 	result.y = minY;
 
 	return result;
-} 
+}
 
-Point CompositeShape::getMaxPoint() const { 
+Point CompositeShape::getMaxPoint() const {
 	Point max = shapes[0]->getMaxPoint();
 
 	double maxX = max.x;
@@ -68,7 +68,7 @@ void CompositeShape::addShape(std::shared_ptr<Shape> shape) {
 
 void CompositeShape::move(double dx, double dy) {
 	for (const auto& shape : shapes) {
-		shape->move(dx,dy);
+		shape->move(dx, dy);
 	}
 }
 
@@ -100,10 +100,8 @@ void CompositeShape::scale(double factor) {
 	Point globalCenter = getCenter();
 	for (const auto& shape : shapes) {
 		Point shapeCenter = shape->getCenter();
-		double newX = globalCenter.x +
-			(shapeCenter.x - globalCenter.x) * factor;
-		double newY = globalCenter.y +
-			(shapeCenter.y - globalCenter.y) * factor;
+		double newX = globalCenter.x + (shapeCenter.x - globalCenter.x) * factor;
+		double newY = globalCenter.y + (shapeCenter.y - globalCenter.y) * factor;
 		double dx = newX - shapeCenter.x;
 		double dy = newY - shapeCenter.y;
 		shape->move(dx, dy);

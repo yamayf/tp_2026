@@ -19,5 +19,5 @@ public:
 	std::string getName() const override;
 	Point getMinPoint() const override;
 	Point getMaxPoint() const override;
-}; 
+};
 #endif
