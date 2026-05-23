@@ -1,17 +1,14 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
-
 #include "point.h"
 #include "shape.h"
 #include <string>
-
 class Rectangle : public Shape {
 private:
 	Point leftBottom;
 	Point rightTop;
 public:
 	Rectangle(Point lb, Point rt);
-
 	double getArea() const override;
 	Point getCenter() const override;
 	void move(double dx, double dy) override;
@@ -20,5 +17,4 @@ public:
 	Point getMinPoint() const override;
 	Point getMaxPoint() const override;
 };
-
 #endif

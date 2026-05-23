@@ -1,17 +1,14 @@
 #ifndef CIRCLE_H
 #define CIRCLE_H
-
 #include "point.h"
 #include "shape.h"
 #include <string>
-
 class Circle : public Shape {
 private:
 	Point center;
 	double radius;
 public:
 	Circle(Point center, double  radius);
-
 	double getArea() const override;
 	Point getCenter() const override;
 	void move(double dx, double dy) override;
