@@ -1,4 +1,4 @@
-#ifndef DICT_HPP
+﻿#ifndef DICT_HPP
 #define DICT_HPP
 
 #include <string>

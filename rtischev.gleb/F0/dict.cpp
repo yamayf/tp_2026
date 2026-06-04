@@ -1,4 +1,4 @@
-#include "dict.hpp"
+﻿#include "dict.hpp"
 #include "utils.hpp"
 #include <iostream>
 #include <algorithm>
