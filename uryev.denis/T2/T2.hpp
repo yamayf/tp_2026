@@ -33,7 +33,6 @@ std::istream& operator>>(std::istream& in, DataStruct& dest) {
     if (!sentry) return in;
 
     DataStruct temp;
-    // Флаги для проверки, что все 3 ключа были считаны
     bool has_key1 = false;
     bool has_key2 = false;
     bool has_key3 = false;

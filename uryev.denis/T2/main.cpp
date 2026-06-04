@@ -3,8 +3,6 @@
 
 int main() {
     std::vector<DataStruct> data;
-
-    // 1. Чтение с помощью итераторов и std::copy
     std::copy(
         std::istream_iterator<DataStruct>(std::cin),
         std::istream_iterator<DataStruct>(),
