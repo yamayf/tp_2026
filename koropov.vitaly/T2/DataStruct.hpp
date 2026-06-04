@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
 
 struct DataStruct
 {
@@ -12,9 +11,33 @@ struct DataStruct
   std::string key3;
 };
 
+struct DelimiterIO
+{
+  char expected;
+};
+
+struct DblLitIO
+{
+  double &ref;
+};
+
+struct UllHexIO
+{
+  unsigned long long &ref;
+};
+
+struct StringIO
+{
+  std::string &ref;
+};
+
 bool compareDataStruct(const DataStruct &a, const DataStruct &b);
 
+std::istream &operator>>(std::istream &in, DelimiterIO &&dest);
+std::istream &operator>>(std::istream &in, DblLitIO &&dest);
+std::istream &operator>>(std::istream &in, UllHexIO &&dest);
+std::istream &operator>>(std::istream &in, StringIO &&dest);
 std::istream &operator>>(std::istream &in, DataStruct &dest);
 std::ostream &operator<<(std::ostream &out, const DataStruct &src);
 
-#endif // DATA_STRUCT_HPP
+#endif
