@@ -29,7 +29,6 @@ std::istream& operator>>(std::istream& in, Polygon& dest) {
   }
   
   std::vector<Point> tempPoints(numPoints);
-  // Читаем строго numPoints элементов без использования istream_iterator
   std::generate_n(tempPoints.begin(), numPoints, [&in]() {
     Point p;
     if (!(in >> p)) {

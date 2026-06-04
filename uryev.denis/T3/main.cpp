@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <iterator>
 #include "Polygon.hpp"
-
+//комментарий
 void handleArea(const std::vector<Polygon>& polygons, std::istream& is) {
   std::string arg;
   is >> arg;

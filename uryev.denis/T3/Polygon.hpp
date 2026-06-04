@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-
+// комментарий
 struct Point {
   int x, y;
 };
