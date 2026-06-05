@@ -2,7 +2,7 @@
 #include <numeric>
 #include <cmath>
 #include <algorithm>
-#include <functional> // Явное использование заголовочного файла
+#include <functional>
 
 double getArea(const Polygon &poly)
 {
@@ -103,3 +103,4 @@ bool isIntersectingPolygons(const Polygon &p1, const Polygon &p2)
 
   return false;
 }
+
