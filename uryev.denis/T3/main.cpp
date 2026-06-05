@@ -171,7 +171,7 @@ void handleCount(const std::vector<Polygon> &polygons, std::istream &is)
   }
   std::cout << count << "\n";
 }
-void handleEcho(std::vector<Polygon> &polygons, std::istream &is)
+void handleEcho(std::vector<Polygon>& polygons, std::istream& is)
 {
   Polygon target;
   if (!(is >> target))
@@ -198,7 +198,7 @@ void handleEcho(std::vector<Polygon> &polygons, std::istream &is)
   polygons = std::move(updatedCollection);
   std::cout << addedCount << "\n";
 }
-void handleInFrame(const std::vector<Polygon> &polygons, std::istream &is)
+void handleInFrame(const std::vector<Polygon>& polygons, std::istream& is)
 {
   Polygon target;
   if (!(is >> target) || polygons.empty())
