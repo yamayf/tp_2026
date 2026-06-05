@@ -156,8 +156,8 @@ bool comparator(const DataStruct& a, const DataStruct& b) {
         case DataStruct::CHAR: return a.char1 < b.char1;
         case DataStruct::COMPLEX: return std::abs(a.complex1) < std::abs(b.complex1);
         case DataStruct::RATIONAL: {
-            double av = (double)a.rational1.first / a.rational1.second;
-            double bv = (double)b.rational1.first / b.rational1.second;
+            double av = static_cast<double>(a.rational1.first) / static_cast<double>(a.rational1.second);
+            double bv = static_cast<double>(b.rational1.first) / static_cast<double>(b.rational1.second);
             return av < bv;
         }
         default: return false;
@@ -172,19 +172,18 @@ int main() {
         if (line.empty()) break;
 
         DataStruct d;
-        size_t pos = 0;
         bool hasKey1 = false, hasKey2 = false, hasKey3 = false;
 
         if (line.size() < 4 || line[0] != '(' || line[1] != ':' || line.back() != ':') continue;
-        line = line.substr(2, line.size() - 3);
+        std::string inner = line.substr(2, line.size() - 3);
 
-        pos = 0;
-        while (pos < line.size()) {
-            if (line[pos] != ':') break;
+        size_t pos = 0;
+        while (pos < inner.size()) {
+            if (inner[pos] != ':') break;
             pos++;
-            size_t nextPos = line.find(':', pos);
+            size_t nextPos = inner.find(':', pos);
             if (nextPos == std::string::npos) break;
-            std::string part = line.substr(pos, nextPos - pos);
+            std::string part = inner.substr(pos, nextPos - pos);
             pos = nextPos;
 
             size_t spacePos = part.find(' ');
