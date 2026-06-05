@@ -3,37 +3,27 @@
 #include <algorithm>
 #include <iterator>
 #include <limits>
-#include <cmath>
-#include <fstream>
+// #include <cmath>
+// #include <fstream>
+
 #include "dataStruct.hpp"
 
 int main()
 {
   std::vector<DataStruct> data;
-  std::ifstream infile("input.txt");
-
-  if (!infile.is_open())
+  while (!std::cin.eof())
   {
-    std::cerr << "Error: could not open input.txt\n";
-    return 1;
-  }
+    std::copy(
+        std::istream_iterator<DataStruct>(std::cin),
+        std::istream_iterator<DataStruct>(),
+        std::back_inserter(data));
 
-  std::string line;
-  while (std::getline(infile, line))
-  {
-    if (line.empty())
-      continue;
-
-    std::stringstream ss(line);
-    DataStruct temp;
-
-    if (ss >> temp)
+    if (std::cin.fail() && !std::cin.eof())
     {
-      data.push_back(temp);
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
   }
-
-  infile.close();
 
   std::sort(data.begin(), data.end(), [](const DataStruct &a, const DataStruct &b)
             {
@@ -51,6 +41,7 @@ int main()
 
     return a.key3.length() < b.key3.length(); });
 
+  // Вывод данных в консоль
   std::copy(
       data.begin(),
       data.end(),
