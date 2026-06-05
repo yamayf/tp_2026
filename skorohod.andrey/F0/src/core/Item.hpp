@@ -1,7 +1,7 @@
 #ifndef ITEM_HPP
 #define ITEM_HPP
 
-class Item 
+class Item
 {
 public:
     Item(int w = 0, int v = 0);
