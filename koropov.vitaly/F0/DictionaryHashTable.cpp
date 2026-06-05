@@ -31,7 +31,7 @@ void DictionaryHashTable::resizeAndRehash()
   size_t oldCapacity = capacity;
   std::vector<HashEntry> oldTable = table;
 
-  capacity = nextPrime(oldCapacity * 1.5);
+  capacity = nextPrime(static_cast<size_t>(oldCapacity * 1.5));
   table = std::vector<HashEntry>(capacity);
   size = 0;
 
@@ -75,7 +75,7 @@ void DictionaryHashTable::insert(const std::string &word, const std::string &tra
     throw std::invalid_argument("Error: Translation value cannot be empty.");
   }
 
-  if ((double)size / capacity >= maxLoadFactor)
+  if (static_cast<double>(size) / capacity >= maxLoadFactor)
   {
     resizeAndRehash();
   }
@@ -181,7 +181,7 @@ void DictionaryHashTable::remove(const std::string &word)
 
 void DictionaryHashTable::displayTable() const
 {
-  std::cout << "\n--- Hash Table Structure (Capacity: " << capacity << ", Size: " << size << ") ---\n";
+  std::cout << "\n--- Hash Table (Capacity: " << capacity << ", Size: " << size << ") ---\n";
   for (size_t i = 0; i < capacity; ++i)
   {
     std::cout << "Slot " << std::setw(2) << i << ": ";
@@ -202,6 +202,7 @@ void DictionaryHashTable::displayTable() const
   }
   std::cout << "---------------------------------------------------------\n";
 }
+
 bool DictionaryHashTable::isPrime(size_t n) const
 {
   if (n <= 1)
