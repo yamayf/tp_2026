@@ -35,22 +35,25 @@ bool compareDataStruct(
 int main()
 {
   std::vector<DataStruct> data;
-
-  // Настраиваем итераторы для чтения из консоли (std::cin)
-  std::istream_iterator<DataStruct> input_begin(std::cin);
-  std::istream_iterator<DataStruct> input_end;
-
-  // Читаем данные до конца ввода
-  std::copy(
-      input_begin,
-      input_end,
-      std::back_inserter(data));
-
-  // Проверяем на критические ошибки парсинга
-  if (!std::cin.eof() && std::cin.fail())
+  while (!std::cin.eof())
   {
-    std::cerr << "Parsing error occurred!\n";
-    return 1;
+    // Настраиваем итераторы для чтения из консоли (std::cin)
+    std::istream_iterator<DataStruct> input_begin(std::cin);
+    std::istream_iterator<DataStruct> input_end;
+
+    // Читаем данные до конца ввода
+    std::copy(
+        input_begin,
+        input_end,
+        std::back_inserter(data));
+
+    // Проверяем на критические ошибки парсинга
+    if (!std::cin.eof() && std::cin.fail())
+    {
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      ;
+    }
   }
 
   // Сортируем данные с использованием нашего компаратора
