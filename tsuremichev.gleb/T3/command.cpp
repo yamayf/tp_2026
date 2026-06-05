@@ -149,7 +149,14 @@ void processCommands(std::vector<Polygon> &shapes)
         {
           size_t num = std::stoull(sub);
           VertexCountFilter filter(VertexCountFilter::EXACT, num);
-          std::cout << std::count_if(shapes.begin(), shapes.end(), filter) << "\n";
+          if (num < 3)
+          {
+            std::cout << "<INVALID COMMAND>\n";
+          }
+          else
+          {
+            std::cout << std::count_if(shapes.begin(), shapes.end(), filter) << "\n";
+          }
         }
         catch (...)
         {
