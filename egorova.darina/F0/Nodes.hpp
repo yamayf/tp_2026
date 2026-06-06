@@ -5,14 +5,12 @@
 #include <vector>
 #include "TranslationList.hpp"
 
-// Базовый класс узла
 class Node {
 public:
     virtual ~Node() {}
     virtual bool isLeaf() const = 0;
 };
 
-// Внутренний узел: хранит ключи для навигации и ссылки на детей
 class InternalNode : public Node {
 public:
     InternalNode() {}
@@ -22,7 +20,6 @@ public:
     std::vector<Node*> mChildren;
 };
 
-// Листовой узел: хранит английское слово и список его переводов
 class LeafNode : public Node {
 public:
     explicit LeafNode(const std::string& key) : mKey(key) {}

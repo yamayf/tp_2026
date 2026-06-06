@@ -48,8 +48,6 @@ public:
         bool hole = false;
         removeRecursive(mRoot, key, hole);
 
-        // Если корень стал внутренним узлом без ключей,
-        // его ребенок становится новым корнем
         if (!mRoot->isLeaf()) {
             InternalNode* internal = static_cast<InternalNode*>(mRoot);
             if (internal->mChildren.size() == 1) {
@@ -160,7 +158,6 @@ private:
                 internal->mKeys.erase(internal->mKeys.begin() + i - 1);
             }
 
-            // Если в узле меньше 2 детей, сообщаем родителю о "дыре"
             if (internal->mChildren.size() < 2) hole = true;
             else hole = false;
         }
