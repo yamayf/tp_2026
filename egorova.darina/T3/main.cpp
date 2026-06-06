@@ -18,7 +18,12 @@ int main(int argc, char* argv[]) {
         if (line.empty()) continue;
         std::stringstream ss(line);
         Polygon poly;
-        if (ss >> poly && ss.eof()) figures.push_back(poly);
+        if (ss >> poly) {
+            std::string extra;
+            if (!(ss >> extra)) { // Если после полигона нет лишних данных (кроме пробелов)
+                figures.push_back(poly);
+            }
+        }
     }
 
     std::string cmd;

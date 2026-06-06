@@ -38,20 +38,17 @@ bool segmentsIntersect(Segment s1, Segment s2) {
 }
 
 bool isPointInPolygon(Point pt, const Polygon& poly) {
-    bool result = false;
-    size_t n = poly.points.size();
-    for (size_t i = 0, j = n - 1; i < n; j = i++) {
+    bool res = false;
+    for (size_t i = 0, j = poly.points.size() - 1; i < poly.points.size(); j = i++) {
         if (((poly.points[i].y > pt.y) != (poly.points[j].y > pt.y)) &&
             (pt.x < (poly.points[j].x - poly.points[i].x) * (pt.y - poly.points[i].y) /
-            static_cast<double>(poly.points[j].y - poly.points[i].y) + poly.points[i].x)) {
-            result = !result;
-        }
+            static_cast<double>(poly.points[j].y - poly.points[i].y) + poly.points[i].x))
+            res = !res;
     }
-    return result;
+    return res;
 }
 
 bool polygonsIntersect(const Polygon& p1, const Polygon& p2) {
-    // 1. Пересечение границ
     for (size_t i = 0; i < p1.points.size(); ++i) {
         Segment s1 = {p1.points[i], p1.points[(i + 1) % p1.points.size()]};
         for (size_t j = 0; j < p2.points.size(); ++j) {
@@ -59,7 +56,5 @@ bool polygonsIntersect(const Polygon& p1, const Polygon& p2) {
             if (segmentsIntersect(s1, s2)) return true;
         }
     }
-    // 2. Один внутри другого
-    if (isPointInPolygon(p1.points[0], p2) || isPointInPolygon(p2.points[0], p1)) return true;
-    return false;
+    return isPointInPolygon(p1.points[0], p2) || isPointInPolygon(p2.points[0], p1);
 }
