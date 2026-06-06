@@ -43,6 +43,10 @@ bool parseUnsignedLongLong(const std::string& s, unsigned long long& v) {
         v = 0;
         return true;
     }
+    if (str == "0x0" || str == "0X0") {
+        v = 0;
+        return true;
+    }
     if (str.size() == 1 && str[0] == '0') {
         v = 0;
         return true;
@@ -248,19 +252,29 @@ bool comparator(const DataStruct& a, const DataStruct& b) {
 int main() {
     std::vector<DataStruct> data;
     std::string line;
+    bool hasAny = false;
+
     while (std::getline(std::cin, line)) {
-        if (line.empty()) break;
+        if (line.empty()) continue;
+        hasAny = true;
         std::istringstream iss(line);
         DataStruct d;
         if (iss >> d) {
             data.push_back(d);
         }
     }
-    if (data.empty()) {
+
+    if (!hasAny) {
         std::cout << "Looks like there is no supported record. "
                   << "Cannot determine input. Test skipped" << std::endl;
         return 0;
     }
+
+    if (data.empty()) {
+        std::cout << "Atleast one supported record type" << std::endl;
+        return 0;
+    }
+
     std::sort(data.begin(), data.end(), comparator);
     for (const auto& d : data) {
         std::cout << d << "\n";
