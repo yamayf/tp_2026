@@ -1,4 +1,4 @@
-﻿#include "data_struct.cpp"
+﻿#include "data_struct.h"
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -7,7 +7,6 @@
 int main() {
     std::vector<DataStruct> data;
 
-    // Чтение с помощью итераторов
     std::copy(
         std::istream_iterator<DataStruct>(std::cin),
         std::istream_iterator<DataStruct>(),
@@ -19,10 +18,8 @@ int main() {
         return 0;
     }
 
-    // Сортировка
     std::sort(data.begin(), data.end(), comparator);
 
-    // Вывод с помощью итераторов
     std::copy(
         data.begin(),
         data.end(),

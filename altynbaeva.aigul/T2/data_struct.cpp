@@ -1,5 +1,5 @@
+#include "data_struct.h"
 #include <iostream>
-#include <string>
 #include <vector>
 #include <algorithm>
 #include <sstream>
@@ -7,14 +7,7 @@
 #include <cctype>
 #include <stdexcept>
 
-struct DataStruct {
-    char key1;
-    unsigned long long key2;
-    std::string key3;
-};
-
 char parseKey1(const std::string& s) {
-    // Только формат 'X' (CHR LIT)
     if (s.size() == 3 && s[0] == '\'' && s[2] == '\'') {
         return s[1];
     }
@@ -63,7 +56,6 @@ std::istream& operator>>(std::istream& in, DataStruct& data) {
         return in;
     }
 
-    // Trim
     size_t start = line.find_first_not_of(" \t\r\n");
     size_t end = line.find_last_not_of(" \t\r\n");
     if (start == std::string::npos) {
@@ -72,16 +64,13 @@ std::istream& operator>>(std::istream& in, DataStruct& data) {
     }
     line = line.substr(start, end - start + 1);
 
-    // Проверяем формат (: ... :)
     if (line.size() < 4 || line.substr(0, 2) != "(:" || line.substr(line.size() - 2) != ":)") {
         in.setstate(std::ios::failbit);
         return in;
     }
 
-    // Убираем (: и :)
     line = line.substr(2, line.size() - 4);
 
-    // Разделяем по ':'
     std::vector<std::string> parts;
     size_t pos = 0;
     size_t nextPos = line.find(':');
