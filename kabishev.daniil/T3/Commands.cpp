@@ -6,6 +6,7 @@
 #include <string>
 #include <functional>
 #include <cmath>
+#include <map>
 
 // площадь
 double getArea(const Polygon& polygon) {
@@ -193,22 +194,23 @@ void handleSame(const std::vector<Polygon>& polygons) {
 }
 
 void doTasks(const std::vector<Polygon>& polygons) {
-    std::string cmd;
-    while (std::cin >> cmd) {
-        if (cmd == "AREA") {
-            handleArea(polygons);
-        } else if (cmd == "MAX") {
-            handleMax(polygons);
-        } else if (cmd == "MIN") {
-            handleMin(polygons);
-        } else if (cmd == "COUNT") {
-            handleCount(polygons);
-        } else if (cmd == "PERMS") {
-            handlePerms(polygons);
-        } else if (cmd == "SAME") {
-            handleSame(polygons);
-        } else {
+    std::map<std::string, std::function<void(void)>> cmds;
+
+    cmds["AREA"]  = [&polygons]() { handleArea(polygons); };
+    cmds["MAX"]   = [&polygons]() { handleMax(polygons); };
+    cmds["MIN"]   = [&polygons]() { handleMin(polygons); };
+    cmds["COUNT"] = [&polygons]() { handleCount(polygons); };
+    cmds["PERMS"] = [&polygons]() { handlePerms(polygons); };
+    cmds["SAME"]  = [&polygons]() { handleSame(polygons); };
+
+    std::string command;
+
+    while (!(std::cin >> command).eof()) {
+        try {
+            cmds.at(command)();
+        } catch (...) {
             std::cout << "<INVALID COMMAND>\n";
+
             std::string dummy;
             std::getline(std::cin, dummy);
         }
