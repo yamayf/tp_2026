@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <vector>
 #include <cmath>
+#include <algorithm>
 
 namespace tchervinsky
 {
@@ -75,7 +76,6 @@ namespace tchervinsky
         std::ostringstream oss;
         oss << std::fixed << std::setprecision(1) << mantissa << "e";
 
-        // Добавляем знак + для положительной экспоненты
         if (exponent > 0)
             oss << "+";
         else if (exponent < 0)
@@ -83,6 +83,51 @@ namespace tchervinsky
 
         oss << std::abs(exponent);
         return oss.str();
+    }
+
+    static std::vector<std::string> splitFields(const std::string& str)
+    {
+        std::vector<std::string> fields;
+        std::string current;
+        bool inQuotes = false;
+        char quoteChar = '\0';
+
+        for (size_t i = 0; i < str.length(); ++i)
+        {
+            char c = str[i];
+
+            if (!inQuotes && (c == '"' || c == '\''))
+            {
+                inQuotes = true;
+                quoteChar = c;
+                current += c;
+            }
+            else if (inQuotes && c == quoteChar)
+            {
+                inQuotes = false;
+                quoteChar = '\0';
+                current += c;
+            }
+            else if (!inQuotes && c == ':')
+            {
+                if (!current.empty())
+                {
+                    fields.push_back(current);
+                    current.clear();
+                }
+            }
+            else
+            {
+                current += c;
+            }
+        }
+
+        if (!current.empty())
+        {
+            fields.push_back(current);
+        }
+
+        return fields;
     }
 
     static bool parseDataStruct(const std::string& line, DataStruct& ds)
@@ -93,14 +138,7 @@ namespace tchervinsky
 
         content = content.substr(1, content.length() - 2);
 
-        std::vector<std::string> fields;
-        std::stringstream ss(content);
-        std::string field;
-        while (std::getline(ss, field, ':'))
-        {
-            if (!field.empty())
-                fields.push_back(field);
-        }
+        std::vector<std::string> fields = splitFields(content);
 
         bool hasKey1 = false, hasKey2 = false, hasKey3 = false;
         char key1_val = 0;
@@ -113,8 +151,8 @@ namespace tchervinsky
             if (spacePos == std::string::npos)
                 continue;
 
-            std::string fieldName = f.substr(0, spacePos);
-            std::string fieldValue = f.substr(spacePos + 1);
+            std::string fieldName = trim(f.substr(0, spacePos));
+            std::string fieldValue = trim(f.substr(spacePos + 1));
 
             if (fieldName == "key1")
             {
@@ -128,19 +166,14 @@ namespace tchervinsky
             }
             else if (fieldName == "key3")
             {
-                // Исправленный парсинг key3 с поддержкой двоеточия внутри строки
-                std::string valuePart = fieldValue;
-                size_t endQuote = valuePart.find_last_of('"');
-                if (endQuote == std::string::npos)
-                    endQuote = valuePart.find_last_of('\'');
-
-                if (endQuote != std::string::npos && endQuote >= 1)
+                // Парсинг строки в кавычках
+                if (fieldValue.length() >= 2)
                 {
-                    char first = valuePart[0];
-                    char last = valuePart[endQuote];
+                    char first = fieldValue[0];
+                    char last = fieldValue[fieldValue.length() - 1];
                     if ((first == '"' && last == '"') || (first == '\'' && last == '\''))
                     {
-                        key3_val = valuePart.substr(1, endQuote - 1);
+                        key3_val = fieldValue.substr(1, fieldValue.length() - 2);
                         hasKey3 = true;
                     }
                 }
