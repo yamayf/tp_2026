@@ -4,11 +4,12 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
-#include <numeric>
 #include <iomanip>
 #include <climits>
-#include <functional>
-#include <iterator>
+
+bool isValidPolygon(const Polygon& p) {
+    return p.points.size() >= 3;
+}
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
@@ -27,19 +28,10 @@ int main(int argc, char* argv[]) {
     while (std::getline(file, line)) {
         if (line.empty()) continue;
 
-        std::string trimmed;
-        for (char c : line) {
-            if (!std::isspace(c)) trimmed += c;
-            else if (!trimmed.empty() && trimmed.back() != ' ') trimmed += ' ';
-        }
-
-        std::istringstream iss(trimmed);
+        std::istringstream iss(line);
         Polygon p;
-        if (iss >> p) {
-            std::string leftover;
-            if (!(iss >> leftover)) {
-                polygons.push_back(p);
-            }
+        if (iss >> p && isValidPolygon(p)) {
+            polygons.push_back(p);
         }
     }
     file.close();
@@ -192,13 +184,11 @@ int main(int argc, char* argv[]) {
             std::vector<Polygon> result;
 
             for (size_t i = 0; i < polygons.size(); ++i) {
-                if (polygons[i] == target) {
-                    if (i + 1 < polygons.size() && polygons[i + 1] == target) {
-                        removed++;
-                        continue;
-                    }
-                }
                 result.push_back(polygons[i]);
+                if (i + 1 < polygons.size() && polygons[i] == target && polygons[i + 1] == target) {
+                    result.pop_back();
+                    removed++;
+                }
             }
 
             polygons = std::move(result);
