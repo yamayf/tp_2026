@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <numeric>
 #include <iomanip>
-#include <iterator>
 #include <climits>
 
 int main(int argc, char* argv[]) {
@@ -21,8 +20,13 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    // ИСПРАВЛЕНО: используем ручной цикл вместо istream_iterator
     std::vector<Polygon> polygons;
-    std::copy(std::istream_iterator<Polygon>(file), std::istream_iterator<Polygon>(), std::back_inserter(polygons));
+    Polygon p;
+    while (file >> p) {
+        polygons.push_back(std::move(p));
+    }
+    file.clear(); // Сбрасываем failbit/eofbit
     file.close();
 
     std::cout << std::fixed << std::setprecision(1);
@@ -135,7 +139,7 @@ int main(int argc, char* argv[]) {
             std::getline(iss >> std::ws, target_str);
 
             std::istringstream target_iss(target_str);
-            if (!(target_iss >> target) || target.points.empty()) {
+            if (!(target_iss >> target)) {
                 std::cout << "<INVALID COMMAND>\n";
                 continue;
             }
