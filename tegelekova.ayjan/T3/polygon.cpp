@@ -138,13 +138,13 @@ namespace tchervinsky
         return setA == setB;
     }
 
-    bool isRectangle(const Polygon& poly)
+    bool isRectangle(const Polygon&)
     {
-        return false; // временно
+        return false;
     }
 
-    bool hasRightAngle(const Polygon& poly)
+    bool hasRightAngle(const Polygon&)
     {
-        return false; // временно
+        return false;
     }
-}
+
