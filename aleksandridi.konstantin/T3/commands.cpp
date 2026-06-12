@@ -42,7 +42,6 @@ void cmdArea(const std::vector<Polygon>& polygons, const std::string& arg) {
         }
     }
 }
-
 void cmdMax(const std::vector<Polygon>& polygons, const std::string& arg) {
     if (polygons.empty()) {
         std::cout << "<INVALID COMMAND>\n";
@@ -64,7 +63,6 @@ void cmdMax(const std::vector<Polygon>& polygons, const std::string& arg) {
         std::cout << "<INVALID COMMAND>\n";
     }
 }
-
 void cmdMin(const std::vector<Polygon>& polygons, const std::string& arg) {
     if (polygons.empty()) {
         std::cout << "<INVALID COMMAND>\n";
@@ -86,7 +84,6 @@ void cmdMin(const std::vector<Polygon>& polygons, const std::string& arg) {
         std::cout << "<INVALID COMMAND>\n";
     }
 }
-
 void cmdCount(const std::vector<Polygon>& polygons, const std::string& arg) {
     if (arg == "EVEN") {
         std::cout << std::count_if(polygons.begin(), polygons.end(),
@@ -108,14 +105,12 @@ void cmdCount(const std::vector<Polygon>& polygons, const std::string& arg) {
         }
     }
 }
-
 void cmdLessArea(const std::vector<Polygon>& polygons, const Polygon& p) {
     double targetArea = getArea(p);
     size_t count = std::count_if(polygons.begin(), polygons.end(),
         [targetArea](const Polygon& poly) { return getArea(poly) < targetArea; });
     std::cout << count << "\n";
 }
-
 void cmdMaxSeq(const std::vector<Polygon>& polygons, const Polygon& target) {
     auto result = std::accumulate(polygons.begin(), polygons.end(), std::make_pair(0, 0),
         [&target](std::pair<int, int> state, const Polygon& p) {

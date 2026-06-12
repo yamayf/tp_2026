@@ -4,6 +4,8 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <map>
+#include <functional>
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
@@ -29,16 +31,20 @@ int main(int argc, char* argv[]) {
         }
     }
     file.close();
-
+    using CommandHandler = std::function<void(const std::string&)>;
+    std::map<std::string, CommandHandler> simpleCommands = {
+        {"AREA",  std::bind(cmdArea,  std::cref(polygons), std::placeholders::_1)},
+        {"MAX",   std::bind(cmdMax,   std::cref(polygons), std::placeholders::_1)},
+        {"MIN",   std::bind(cmdMin,   std::cref(polygons), std::placeholders::_1)},
+        {"COUNT", std::bind(cmdCount, std::cref(polygons), std::placeholders::_1)}
+    };
     std::string cmd;
     while (std::cin >> cmd) {
-        if (cmd == "AREA" || cmd == "MAX" || cmd == "MIN" || cmd == "COUNT") {
+        auto it = simpleCommands.find(cmd);
+        if (it != simpleCommands.end()) {
             std::string arg;
             if (std::cin >> arg) {
-                if (cmd == "AREA") cmdArea(polygons, arg);
-                else if (cmd == "MAX") cmdMax(polygons, arg);
-                else if (cmd == "MIN") cmdMin(polygons, arg);
-                else if (cmd == "COUNT") cmdCount(polygons, arg);
+                it->second(arg);
             }
         } else if (cmd == "LESSAREA" || cmd == "MAXSEQ") {
             std::string remainder;
@@ -59,6 +65,5 @@ int main(int argc, char* argv[]) {
             std::getline(std::cin, dummy);
         }
     }
-
     return 0;
 }
